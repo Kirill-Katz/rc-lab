@@ -20,7 +20,7 @@ type ClientManager struct {
 
 func (m *ClientManager) Connect(fd int) error {
 	conn := &Connection {
-		FD: fd,
+		Socket: Socket{fd},
 		Role: RoleUnknown,
 	}
 
@@ -35,11 +35,11 @@ func (m *ClientManager) Connect(fd int) error {
 		return err
 	}
 
-	if err := writeMessage(fd, request); err != nil {
+	if err := writeMessage(&conn.Socket, request); err != nil {
 		return err
 	}
 
-	payload, err := readMessage(fd)
+	payload, err := readMessage(&conn.Socket)
 	if err != nil {
 		return err
 	}
@@ -85,8 +85,8 @@ func (m *ClientManager) Disconnect(conn *Connection) {
 
     switch conn.Role {
     case RoleClient:
-        delete(m.Clients, conn.FD)
+        delete(m.Clients, conn.Socket.FD)
     case RoleProvider:
-        delete(m.Providers, conn.FD)
+        delete(m.Providers, conn.Socket.FD)
     }
 }

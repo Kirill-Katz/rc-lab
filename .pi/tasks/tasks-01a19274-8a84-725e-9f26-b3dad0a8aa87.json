@@ -1,0 +1,16 @@
+{
+  "nextId": 2,
+  "tasks": [
+    {
+      "id": "1",
+      "subject": "Inspect Pi configuration and installed features",
+      "description": "Read settings and package documentation without secrets to identify installed features and exact usage.",
+      "status": "completed",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1793458531264,
+      "updatedAt": 1793458647390
+    }
+  ]
+}
