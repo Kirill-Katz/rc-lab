@@ -1,16 +1,16 @@
 {
-  "nextId": 2,
+  "nextId": 3,
   "tasks": [
     {
-      "id": "1",
-      "subject": "Inspect Pi configuration and installed features",
-      "description": "Read settings and package documentation without secrets to identify installed features and exact usage.",
+      "id": "2",
+      "subject": "Design and challenge the Go API polling architecture",
+      "description": "Use an architect delegate to propose a read-only design for fixed-interval-per-source task polling with 429 Retry-After, 500 exponential backoff and other 4xx handling; then oracle independently critiques it. Synthesize findings and unresolved API-contract decisions.",
       "status": "completed",
       "metadata": {},
       "blocks": [],
       "blockedBy": [],
-      "createdAt": 1793458531264,
-      "updatedAt": 1793458647390
+      "createdAt": 1793475796660,
+      "updatedAt": 1793476360183
     }
   ]
 }
