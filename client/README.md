@@ -19,3 +19,15 @@ The client uses standard `java.net.Socket` and a dedicated reader thread. Frames
 Start the Go server from `server` with `go run ./cmd --host 0.0.0.0 --port 8080`, then run one provider and any number of clients. For another computer on the same LAN, bind the server to `0.0.0.0` and use the server computer's IPv4 address in `--host`; allow TCP port 8080 through the firewall.
 
 If connection is refused, verify that the server is running and that host/port/firewall settings match. The server's protocol and role errors are printed as JSON diagnostics.
+
+## Tests against the lab description
+
+From the repository root, with Java 21, Maven, Go, and Python 3 installed:
+
+```sh
+mvn -f client/pom.xml clean verify
+(cd server && go build -o /tmp/coffee-server ./cmd)
+python3 client/tests/test_lab_integration.py --server /tmp/coffee-server
+```
+
+The Python standard-library suite starts isolated Go servers and real Java client/provider processes. It checks Tasks 1–4, including preparation timing, asynchronous output while stdin holds an incomplete command, more clients than workers, last-item competition, provider alerts/reconnection, and disconnect cancellation/refunds. It takes approximately 45 seconds on the tested machine. See [TEST_RESULTS.md](TEST_RESULTS.md) for results and scope limits.

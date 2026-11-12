@@ -56,7 +56,13 @@ class CoffeeShopClientTest {
                 client.command("order tea=1");
                 serverThread.join(2000);
                 long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(2);
-                while (client.orders().stream().anyMatch(order -> !order.status().equals("ready")) && System.nanoTime() < deadline) Thread.yield();
+                // An empty history also means responses have not arrived yet.
+                // allMatch/anyMatch alone would let the test race the reader thread.
+                while (System.nanoTime() < deadline) {
+                    List<CoffeeShopClient.Order> orders = client.orders();
+                    if (orders.size() == 2 && orders.stream().allMatch(order -> order.status().equals("ready"))) break;
+                    Thread.sleep(5);
+                }
                 assertEquals(2, client.orders().size());
                 assertTrue(client.orders().stream().allMatch(order -> order.status().equals("ready")));
                 client.close();
